@@ -8,9 +8,10 @@
 
 ## Design
 
-- Type: Space Grotesk (display), Inter (body), IBM Plex Mono (labels/data).
+- Type: Space Grotesk (display), Inter (body), IBM Plex Mono (labels/data), sized to fill the page (76→60px display headline, larger body/list type on page 2).
 - Color: cobalt `#1490EB` and green `#50B83F`, taken directly from the VaultsPay logo, on an ink `#0B1B2E` / paper `#F6F7F9` base.
-- Signature motif: a fanned payment-card stack on page 1, echoed by card-shaped bullet chips on page 2 — grounded in VaultsPay's actual card issuing/acquiring business.
+- Hero photo: the VaultsPay customer/product-mockup image from vaultspay.com, used full-size on page 1.
+- Signature motif: card-shaped bullet chips on page 2 — grounded in VaultsPay's actual card issuing/acquiring business.
 
 ## Regenerating
 
