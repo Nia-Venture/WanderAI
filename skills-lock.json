@@ -1,6 +1,12 @@
 {
   "version": 1,
   "skills": {
+    "ai-video-generation": {
+      "source": "101-skills/skills",
+      "sourceType": "github",
+      "skillPath": "tools/video/ai-video-generation/SKILL.md",
+      "computedHash": "89778323d1e01c08cb00a94164b343265d378d3f86dc01457db87095c912b489"
+    },
     "algorithmic-art": {
       "source": "anthropics/skills",
       "sourceType": "github",
@@ -67,6 +73,24 @@
       "skillPath": "skills/pptx/SKILL.md",
       "computedHash": "6b8b859d26f93aa059c9870d1ab76b44ab69e3d6757ce4a03cc94cb760888073"
     },
+    "pptx-author": {
+      "source": "tristan-mcinnis/pptx-from-layouts-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/pptx-author/SKILL.md",
+      "computedHash": "c8f03cc3b5f6041f3548b57b748819c78576d1a70bb7d12b0db13c4a204193c0"
+    },
+    "pptx-from-layouts": {
+      "source": "tristan-mcinnis/pptx-from-layouts-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/pptx-from-layouts/SKILL.md",
+      "computedHash": "5a0726949ce86198a03650ebc1c6d78b5cc47ea02fd86e734dac9a240fd94530"
+    },
+    "pptx-profile": {
+      "source": "tristan-mcinnis/pptx-from-layouts-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/pptx-profile/SKILL.md",
+      "computedHash": "18d1a10dcb71a875f7b67b54bb4b64dcd990675fb214aaad2e2052a94e2129f9"
+    },
     "skill-creator": {
       "source": "anthropics/skills",
       "sourceType": "github",
@@ -90,6 +114,12 @@
       "sourceType": "github",
       "skillPath": "skills/theme-factory/SKILL.md",
       "computedHash": "598ddfa9784ae2a8c55be5dbb047b98564d875dea6f4669168a87ae1ea1a4ed3"
+    },
+    "ui-ux-pro-max": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/ui-ux-pro-max/SKILL.md",
+      "computedHash": "a55c93594689ff54fc12a1c40b8c5a418470e306392014667378f8633df105f0"
     },
     "web-artifacts-builder": {
       "source": "anthropics/skills",
