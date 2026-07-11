@@ -22,6 +22,7 @@ Claude reads) plus any supporting scripts, references, and templates.
 | `pptx-profile` | Step 1 of the pptx-from-layouts pipeline: profile a PowerPoint template into a layout catalog + render config. |
 | `pptx-author` | Step 2 of the pptx-from-layouts pipeline: write a slide deck in markdown targeting real template layouts, then lint it. |
 | `pptx-from-layouts` | Step 3 of the pptx-from-layouts pipeline: render/edit consultant-grade decks from markdown using a template's real slide-master layouts. |
+| `ai-video-generation` | Generate AI video (text-to-video, image-to-video, lipsync, avatars) via the third-party `inference.sh` CLI (`belt`). Requires a separate `belt` CLI install and `inference.sh` account/login — not self-contained. |
 
 ## How skills are used
 
@@ -44,6 +45,13 @@ rather than Anthropic's official skills repo.
 pipeline (<https://github.com/tristan-mcinnis/pptx-from-layouts-skill>, MIT
 licensed) for generating decks from a company's own PowerPoint template,
 distinct from the general-purpose `pptx` skill above.
+
+`ai-video-generation` comes from a third-party collection
+(<https://github.com/101-skills/skills>, aka inference-sh/skills; no
+`LICENSE` file present in the source repo at install time). It is a thin
+wrapper around the paid `inference.sh` API — it does not generate video
+locally and requires the separate `belt` CLI (`npx skills add belt-sh/cli`)
+plus an authenticated `inference.sh` account to do anything.
 
 ## Updating
 
