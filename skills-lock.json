@@ -67,6 +67,24 @@
       "skillPath": "skills/pptx/SKILL.md",
       "computedHash": "6b8b859d26f93aa059c9870d1ab76b44ab69e3d6757ce4a03cc94cb760888073"
     },
+    "pptx-author": {
+      "source": "tristan-mcinnis/pptx-from-layouts-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/pptx-author/SKILL.md",
+      "computedHash": "c8f03cc3b5f6041f3548b57b748819c78576d1a70bb7d12b0db13c4a204193c0"
+    },
+    "pptx-from-layouts": {
+      "source": "tristan-mcinnis/pptx-from-layouts-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/pptx-from-layouts/SKILL.md",
+      "computedHash": "5a0726949ce86198a03650ebc1c6d78b5cc47ea02fd86e734dac9a240fd94530"
+    },
+    "pptx-profile": {
+      "source": "tristan-mcinnis/pptx-from-layouts-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/pptx-profile/SKILL.md",
+      "computedHash": "18d1a10dcb71a875f7b67b54bb4b64dcd990675fb214aaad2e2052a94e2129f9"
+    },
     "skill-creator": {
       "source": "anthropics/skills",
       "sourceType": "github",
