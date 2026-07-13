@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Duchin General Trading — Emirates Hospital Supply Partnership</title>
+<style>
+/* ── TOKENS ─────────────────────────────────────────────────── */
+:root {
+  --bg0:       #07121F;
+  --bg1:       #0B1C31;
+  --bg2:       #102540;
+  --bg3:       #162F52;
+  --gold:      #C28A2A;
+  --gold-lt:   #D9A848;
+  --gold-dim:  rgba(194,138,42,.13);
+  --gold-bdr:  rgba(194,138,42,.28);
+  --teal:      #1B6E5D;
+  --teal-lt:   #23907A;
+  --teal-dim:  rgba(27,110,93,.14);
+  --teal-bdr:  rgba(27,110,93,.32);
+  --hi:        #DCE9F4;
+  --mid:       #8AAAC4;
+  --lo:        #476278;
+  --border:    rgba(255,255,255,.055);
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --font-mono:  "Courier New", Courier, monospace;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg0:      #F3EFE6;
+    --bg1:      #EBE6DC;
+    --bg2:      #E2DDD2;
+    --bg3:      #D8D3C6;
+    --gold:     #8A6218;
+    --gold-lt:  #A87C28;
+    --gold-dim: rgba(138,98,24,.1);
+    --gold-bdr: rgba(138,98,24,.28);
+    --teal:     #145A4B;
+    --teal-lt:  #1C7A66;
+    --teal-dim: rgba(20,90,75,.1);
+    --teal-bdr: rgba(20,90,75,.28);
+    --hi:       #0B1C31;
+    --mid:      #2A4A68;
+    --lo:       #5A7890;
+    --border:   rgba(0,0,0,.08);
+  }
+}
+:root[data-theme="dark"] {
+  --bg0:       #07121F;
+  --bg1:       #0B1C31;
+  --bg2:       #102540;
+  --bg3:       #162F52;
+  --gold:      #C28A2A;
+  --gold-lt:   #D9A848;
+  --gold-dim:  rgba(194,138,42,.13);
+  --gold-bdr:  rgba(194,138,42,.28);
+  --teal:      #1B6E5D;
+  --teal-lt:   #23907A;
+  --teal-dim:  rgba(27,110,93,.14);
+  --teal-bdr:  rgba(27,110,93,.32);
+  --hi:        #DCE9F4;
+  --mid:       #8AAAC4;
+  --lo:        #476278;
+  --border:    rgba(255,255,255,.055);
+}
+:root[data-theme="light"] {
+  --bg0:      #F3EFE6;
+  --bg1:      #EBE6DC;
+  --bg2:      #E2DDD2;
+  --bg3:      #D8D3C6;
+  --gold:     #8A6218;
+  --gold-lt:  #A87C28;
+  --gold-dim: rgba(138,98,24,.1);
+  --gold-bdr: rgba(138,98,24,.28);
+  --teal:     #145A4B;
+  --teal-lt:  #1C7A66;
+  --teal-dim: rgba(20,90,75,.1);
+  --teal-bdr: rgba(20,90,75,.28);
+  --hi:       #0B1C31;
+  --mid:      #2A4A68;
+  --lo:       #5A7890;
+  --border:   rgba(0,0,0,.08);
+}
+
+/* ── RESET ───────────────────────────────────────────────────── */
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  height: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+body {
+  background: var(--bg0);
+  color: var(--hi);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* ── SIDE NAV ────────────────────────────────────────────────── */
+.sidenav {
+  position: fixed;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--lo);
+  border: none;
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+  outline: none;
+  padding: 0;
+}
+.dot:hover { background: var(--mid); transform: scale(1.3); }
+.dot.active { background: var(--gold); transform: scale(1.5); }
+.dot:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+/* ── SLIDE BASE ──────────────────────────────────────────────── */
+.slide {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg1);
+  overflow: hidden;
+}
+.slide + .slide { border-top: 1px solid var(--border); }
+
+/* ── HEADER & FOOTER ─────────────────────────────────────────── */
+.s-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 52px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.s-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 52px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand-gem {
+  width: 8px; height: 8px;
+  background: var(--gold);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+.brand-name {
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--mid);
+  font-weight: 500;
+}
+.slide-num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .1em;
+  color: var(--lo);
+  font-variant-numeric: tabular-nums;
+}
+.foot-tag {
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--lo);
+}
+
+/* ── SLIDE BODY ──────────────────────────────────────────────── */
+.s-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 52px 28px;
+  overflow: hidden;
+}
+
+/* ── TYPE SCALE ──────────────────────────────────────────────── */
+.eyebrow {
+  font-size: 9px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.display {
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 4.5vw, 4rem);
+  font-weight: 400;
+  line-height: 1.12;
+  color: var(--hi);
+  text-wrap: balance;
+  letter-spacing: -.015em;
+}
+.display em { font-style: italic; color: var(--gold-lt); }
+.section-h {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 2.2vw, 2.1rem);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--hi);
+  text-wrap: balance;
+}
+.lead {
+  font-size: 1rem;
+  color: var(--mid);
+  line-height: 1.7;
+  max-width: 66ch;
+}
+.body-copy {
+  font-size: .875rem;
+  color: var(--mid);
+  line-height: 1.65;
+  max-width: 68ch;
+}
+.data {
+  font-family: var(--font-mono);
+  color: var(--gold);
+  letter-spacing: .04em;
+}
+.rule-gold {
+  width: 36px; height: 2px;
+  background: var(--gold);
+  margin: 16px 0;
+  flex-shrink: 0;
+}
+
+/* ── SLIDE 1: COVER ──────────────────────────────────────────── */
+.cover-ambient {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse at 75% 15%, rgba(194,138,42,.07) 0%, transparent 55%),
+    radial-gradient(ellipse at 15% 85%, rgba(27,110,93,.05) 0%, transparent 50%);
+}
+.cover-grid {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, rgba(0,0,0,.6) 25%, rgba(0,0,0,.6) 75%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, rgba(0,0,0,.6) 25%, rgba(0,0,0,.6) 75%, transparent);
+}
+.cover-layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 0;
+  align-items: center;
+  padding: 32px 52px;
+  position: relative; z-index: 1;
+}
+.cover-r {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 36px;
+  border-left: 1px solid var(--gold-bdr);
+  align-self: stretch;
+  justify-content: center;
+}
+.cred-badge {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 11px 14px;
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-bdr);
+}
+.cred-lbl {
+  font-size: 8px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+}
+.cred-val {
+  font-family: var(--font-mono);
+  font-size: .9rem;
+  color: var(--hi);
+  font-weight: 600;
+  letter-spacing: .03em;
+}
+.cover-strip {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 13px 52px;
+  background: var(--gold-dim);
+  border-top: 1px solid var(--gold-bdr);
+  position: relative; z-index: 1;
+  flex-wrap: wrap;
+  row-gap: 6px;
+}
+.cs-item {
+  font-size: 9px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: 0 18px;
+  border-right: 1px solid var(--gold-bdr);
+}
+.cs-item:first-child { padding-left: 0; }
+.cs-item:last-child { border-right: none; }
+
+/* ── METRIC ROW ──────────────────────────────────────────────── */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--border);
+  margin: 20px 0;
+}
+.metric {
+  padding: 20px 24px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.metric:last-child { border-right: none; }
+.metric-n {
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: var(--gold);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.metric-l {
+  font-size: 9px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--lo);
+}
+
+/* ── PILLARS ─────────────────────────────────────────────────── */
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 18px;
+}
+.pillar {
+  padding: 22px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--gold);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.pillar.t-teal { border-top-color: var(--teal); }
+.p-mark {
+  width: 28px; height: 28px;
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-bdr);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: var(--gold); font-weight: 700; flex-shrink: 0;
+}
+.p-mark.tm {
+  background: var(--teal-dim);
+  border-color: var(--teal-bdr);
+  color: var(--teal-lt);
+}
+.p-title { font-size: .8rem; font-weight: 700; color: var(--hi); letter-spacing: .02em; }
+.p-value {
+  font-family: var(--font-serif);
+  font-size: 1.4rem; color: var(--gold); line-height: 1;
+}
+.p-body { font-size: .78rem; color: var(--mid); line-height: 1.5; }
+
+/* ── LICENSE CARD ────────────────────────────────────────────── */
+.lic-card {
+  background: var(--bg2);
+  border: 1px solid var(--gold-bdr);
+  border-left: 3px solid var(--gold);
+  padding: 22px 28px;
+  margin: 16px 0;
+}
+.lic-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px 28px;
+}
+.lf { display: flex; flex-direction: column; gap: 3px; }
+.lf-l {
+  font-size: 8px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--lo);
+}
+.lf-v { font-size: .875rem; color: var(--hi); font-weight: 500; }
+.lf-v.mono { font-family: var(--font-mono); color: var(--gold); font-size: .82rem; }
+.lf-v.active-tag {
+  display: inline-flex; align-items: center; gap: 5px;
+}
+.active-dot {
+  display: inline-block;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--teal-lt);
+  flex-shrink: 0;
+}
+.chip-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+.chip {
+  padding: 4px 12px;
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-bdr);
+  font-size: 8px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ── ORG / GROUP STRUCTURE ───────────────────────────────────── */
+.group-wrap {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 36px;
+  margin-top: 18px;
+  align-items: start;
+}
+.org {
+  display: flex; flex-direction: column; align-items: center;
+}
+.org-box {
+  width: 200px;
+  padding: 13px 16px;
+  text-align: center;
+  border: 1px solid var(--gold-bdr);
+  background: var(--gold-dim);
+}
+.org-box.holding {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+.ob-type {
+  font-size: 7px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 3px;
+}
+.org-box.holding .ob-type { color: rgba(7,18,31,.6); }
+.ob-name { font-size: .82rem; font-weight: 700; color: var(--hi); line-height: 1.2; }
+.org-box.holding .ob-name { color: #07121F; }
+.org-line { width: 1px; height: 20px; background: var(--gold-bdr); }
+.org-leaf {
+  width: 200px; padding: 11px 16px;
+  text-align: center;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+}
+.ol-type { font-size: 7px; letter-spacing: .2em; text-transform: uppercase; color: var(--lo); margin-bottom: 3px; }
+.ol-name { font-size: .82rem; font-weight: 600; color: var(--teal-lt); line-height: 1.2; }
+.group-facts {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.gf {
+  padding: 15px 17px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 5px;
+}
+.gf-l { font-size: 8px; letter-spacing: .18em; text-transform: uppercase; color: var(--lo); }
+.gf-v { font-size: .82rem; color: var(--hi); font-weight: 500; line-height: 1.35; }
+
+/* ── NEEDS LAYOUT ────────────────────────────────────────────── */
+.needs-wrap {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 32px;
+  margin-top: 16px;
+  align-items: start;
+}
+.needs-list { display: flex; flex-direction: column; gap: 8px; }
+.need {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 14px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--teal);
+}
+.need-mark {
+  font-family: var(--font-mono);
+  font-size: 9px; letter-spacing: .1em;
+  color: var(--teal-lt);
+  background: var(--teal-dim);
+  border: 1px solid var(--teal-bdr);
+  padding: 3px 6px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-variant-numeric: tabular-nums;
+}
+.need-h { font-size: .82rem; font-weight: 700; color: var(--hi); margin-bottom: 2px; }
+.need-p { font-size: .77rem; color: var(--lo); line-height: 1.45; }
+.hosp-panel {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 20px;
+}
+.hosp-panel-h {
+  font-size: 8px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--teal-lt);
+  margin-bottom: 14px;
+}
+.hosp-row {
+  display: flex; justify-content: space-between;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: .8rem;
+}
+.hosp-row:last-of-type { border-bottom: none; }
+.hosp-row span:first-child { color: var(--mid); }
+.hosp-row span:last-child { color: var(--hi); font-weight: 600; }
+.hosp-note {
+  margin-top: 12px; padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-size: .74rem; color: var(--lo); line-height: 1.5;
+}
+
+/* ── CATEGORY GRID ───────────────────────────────────────────── */
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 16px;
+}
+.cat {
+  padding: 16px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 7px;
+  transition: border-color .18s;
+}
+.cat:hover { border-color: var(--gold-bdr); }
+.cat-code {
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: .12em;
+  color: var(--gold);
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-bdr);
+  padding: 2px 7px;
+  display: inline-block;
+  width: fit-content;
+}
+.cat-n { font-size: .82rem; font-weight: 700; color: var(--hi); }
+.cat-d { font-size: .73rem; color: var(--lo); line-height: 1.4; }
+
+/* ── ADVANTAGE GRID ──────────────────────────────────────────── */
+.adv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 16px;
+}
+.adv {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+}
+.adv-mark {
+  width: 18px; height: 18px;
+  flex-shrink: 0;
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-bdr);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; color: var(--gold); margin-top: 1px;
+}
+.adv-h { font-size: .8rem; font-weight: 700; color: var(--hi); margin-bottom: 2px; }
+.adv-p { font-size: .75rem; color: var(--lo); line-height: 1.4; }
+
+/* ── COMMERCIAL ──────────────────────────────────────────────── */
+.comm-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 14px;
+}
+.comm-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 18px 20px;
+}
+.cc-head {
+  font-size: 8px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 13px;
+}
+.tier-tbl {
+  width: 100%; border-collapse: collapse;
+  font-size: .8rem; font-variant-numeric: tabular-nums;
+}
+.tier-tbl th {
+  text-align: left;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 8px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--lo); font-weight: 500;
+}
+.tier-tbl td {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--mid); vertical-align: top;
+}
+.tier-tbl td:first-child { color: var(--hi); font-weight: 500; }
+.tier-tbl td.hl { color: var(--gold); font-weight: 700; font-family: var(--font-mono); }
+.tier-tbl tr:last-child td { border-bottom: none; }
+.sla-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: .8rem;
+}
+.sla-row:last-child { border-bottom: none; }
+.sla-lbl { color: var(--mid); }
+.sla-val { color: var(--gold); font-family: var(--font-mono); font-size: .78rem; font-weight: 700; }
+.sla-badge {
+  font-size: .7rem; color: var(--teal-lt);
+  background: var(--teal-dim); border: 1px solid var(--teal-bdr);
+  padding: 2px 7px;
+}
+.callout-gold {
+  margin-top: 12px; padding: 10px 12px;
+  background: var(--gold-dim); border: 1px solid var(--gold-bdr);
+  font-size: .76rem; color: var(--gold); line-height: 1.5;
+}
+.callout-teal {
+  margin-top: 10px; padding: 10px 12px;
+  background: var(--teal-dim); border: 1px solid var(--teal-bdr);
+  font-size: .76rem; color: var(--teal-lt); line-height: 1.5;
+}
+
+/* ── TIMELINE ────────────────────────────────────────────────── */
+.tl-wrap {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  position: relative;
+  margin-top: 20px;
+}
+.tl-wrap::before {
+  content: '';
+  position: absolute;
+  top: 22px; left: 14%; right: 14%;
+  height: 1px;
+  background: linear-gradient(to right, var(--gold), var(--teal), var(--gold));
+  z-index: 0;
+}
+.tl-step {
+  display: flex; flex-direction: column;
+  align-items: center; text-align: center;
+  padding: 0 14px; position: relative; z-index: 1;
+}
+.tl-dot {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .78rem; font-weight: 700; margin-bottom: 14px;
+}
+.tl-dot.g { background: var(--gold-dim); border: 2px solid var(--gold); color: var(--gold); }
+.tl-dot.t { background: var(--teal-dim); border: 2px solid var(--teal); color: var(--teal-lt); }
+.tl-phase { font-size: 8px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-bottom: 5px; }
+.tl-title { font-size: .85rem; font-weight: 700; color: var(--hi); margin-bottom: 7px; }
+.tl-desc { font-size: .76rem; color: var(--lo); line-height: 1.5; }
+.ops-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 18px;
+}
+.op {
+  padding: 14px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 5px;
+}
+.op-h { font-size: .78rem; font-weight: 700; color: var(--hi); }
+.op-p { font-size: .72rem; color: var(--lo); line-height: 1.4; }
+
+/* ── CONTACT ─────────────────────────────────────────────────── */
+.cta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 18px;
+}
+.cta-card {
+  padding: 20px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--gold);
+  display: flex; flex-direction: column; gap: 5px;
+}
+.cta-step {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--gold-dim); border: 1px solid var(--gold-bdr);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .75rem; font-weight: 700; color: var(--gold);
+  margin-bottom: 7px;
+}
+.cta-h { font-size: .88rem; font-weight: 700; color: var(--hi); }
+.cta-p { font-size: .78rem; color: var(--lo); line-height: 1.5; }
+.cta-a { color: var(--gold); text-decoration: none; font-size: .8rem; }
+.cta-a:hover { text-decoration: underline; }
+.sig-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 14px;
+  margin-top: 18px; padding: 16px 20px;
+  background: var(--bg2); border: 1px solid var(--border);
+}
+.sig-col { display: flex; flex-direction: column; gap: 3px; }
+.sig-lbl { font-size: 8px; letter-spacing: .18em; text-transform: uppercase; color: var(--lo); }
+.sig-val { font-size: .9rem; font-weight: 700; color: var(--hi); }
+.sig-sub { font-size: .76rem; color: var(--mid); }
+.sig-date { font-size: .9rem; font-weight: 700; color: var(--gold); font-family: var(--font-mono); }
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media (max-width: 820px) {
+  .s-head, .s-body, .s-foot { padding-left: 22px; padding-right: 22px; }
+  .cover-layout { grid-template-columns: 1fr; gap: 20px; }
+  .cover-r { padding-left: 0; border-left: none; border-top: 1px solid var(--gold-bdr); padding-top: 16px; flex-direction: row; flex-wrap: wrap; }
+  .pillars { grid-template-columns: 1fr; }
+  .metrics { grid-template-columns: repeat(2, 1fr); }
+  .cat-grid { grid-template-columns: repeat(2, 1fr); }
+  .comm-grid { grid-template-columns: 1fr; }
+  .adv-grid { grid-template-columns: 1fr; }
+  .cta-grid { grid-template-columns: 1fr; }
+  .needs-wrap { grid-template-columns: 1fr; }
+  .group-wrap { grid-template-columns: 1fr; }
+  .ops-grid { grid-template-columns: repeat(2, 1fr); }
+  .lic-grid { grid-template-columns: repeat(2, 1fr); }
+  .sidenav { display: none; }
+  .tl-wrap::before { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── SIDE NAV ──────────────────────────────────────────────── -->
+<nav class="sidenav" aria-label="Presentation navigation">
+  <button class="dot active" onclick="goTo(0)" aria-label="Slide 1: Cover"></button>
+  <button class="dot" onclick="goTo(1)" aria-label="Slide 2: Executive Summary"></button>
+  <button class="dot" onclick="goTo(2)" aria-label="Slide 3: About Duchin General Trading"></button>
+  <button class="dot" onclick="goTo(3)" aria-label="Slide 4: Group Structure"></button>
+  <button class="dot" onclick="goTo(4)" aria-label="Slide 5: The Opportunity"></button>
+  <button class="dot" onclick="goTo(5)" aria-label="Slide 6: Supply Capabilities"></button>
+  <button class="dot" onclick="goTo(6)" aria-label="Slide 7: Competitive Advantage"></button>
+  <button class="dot" onclick="goTo(7)" aria-label="Slide 8: Commercial Proposal"></button>
+  <button class="dot" onclick="goTo(8)" aria-label="Slide 9: Partnership Framework"></button>
+  <button class="dot" onclick="goTo(9)" aria-label="Slide 10: Next Steps"></button>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 01 · COVER
+═══════════════════════════════════════════════════════════════════ -->
+<section class="slide" id="s1">
+  <div class="cover-ambient"></div>
+  <div class="cover-grid"></div>
+
+  <header class="s-head" style="position:relative;z-index:1;">
+    <div class="brand">
+      <div class="brand-gem"></div>
+      <span class="brand-name">Duchin General Trading L.L.C</span>
+    </div>
+    <span class="slide-num">01 / 10</span>
+  </header>
+
+  <div class="cover-layout">
+    <div class="cover-l">
+      <p class="eyebrow">Strategic Supply Partnership Proposal</p>
+      <h1 class="display">
+        Supplying <em>Excellence</em><br>to Emirates Hospital
+      </h1>
+      <div class="rule-gold"></div>
+      <p class="lead" style="max-width:52ch;">A framework agreement structured to meet Emirates Hospital Group's full procurement spectrum — with competitive pricing, operational reliability, and zero compromise on quality.</p>
+      <p style="margin-top:18px;font-size:.8rem;color:var(--lo);">Prepared exclusively for Emirates Hospital Group &nbsp;·&nbsp; July 2026</p>
+    </div>
+    <div class="cover-r">
+      <div class="cred-badge">
+        <span class="cred-lbl">DED License</span>
+        <span class="cred-val">No. 1588874</span>
+      </div>
+      <div class="cred-badge">
+        <span class="cred-lbl">Paid-Up Capital</span>
+        <span class="cred-val">AED 5,000,000</span>
+      </div>
+      <div class="cred-badge">
+        <span class="cred-lbl">DCCI Membership</span>
+        <span class="cred-val">No. 665694</span>
+      </div>
+      <div class="cred-badge">
+        <span class="cred-lbl">Licensed Activity</span>
+        <span class="cred-val">General Trading · Active</span>
+      </div>
+      <div class="cred-badge">
+        <span class="cred-lbl">Parent Entity</span>
+        <span class="cred-val">Duchin Holding LLC-FZ</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-strip">
+    <span class="cs-item">DED Dubai Registered</span>
+    <span class="cs-item">Dubai Chamber Member</span>
+    <span class="cs-item">AED 5M Capital</span>
+    <span class="cs-item">General Trading · Active</span>
+    <span class="cs-item">100% UAE Compliant</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 02 · EXECUTIVE SUMMARY
+═══════════════════════════════════════════════════════════════════ -->
+<section class="slide" id="s2">
+  <header class="s-head">
+    <div class="brand"><div class="brand-gem"></div><span class="brand-name">Duchin General Trading L.L.C</span></div>
+    <span class="slide-num">02 / 10</span>
+  </header>
+  <div class="s-body">
+    <p class="eyebrow">Executive Summary</p>
+    <h2 class="section-h">Three Reasons This Partnership Cannot Be Passed Over</h2>
+    <p class="lead" style="margin-top:8px;">Emirates Hospital Group needs a supply partner that matches its standard of care — financially stable, UAE-licensed, operationally agile, and commercially irresistible. Duchin General Trading, backed by Duchin Holding LLC-FZ, is built for exactly this role.</p>
+
+    <div class="metrics">
+      <div class="metric">
+        <span class="metric-n">AED 5M</span>
+        <span class="metric-l">Paid-Up Capital</span>
+      </div>
+      <div class="metric">
+        <span class="metric-n">8–12%</span>
+        <span class="metric-l">Below Benchmark Pricing</span>
+      </div>
+      <div class="metric">
+        <span class="metric-n">Same Day</span>
+        <span class="metric-l">Emergency Supply SLA</span>
+      </div>
+      <div class="metric">
+        <span class="metric-n">90 Days</span>
+        <span class="metric-l">Cost-Price Risk-Free Trial</span>
+      </div>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="p-mark">&#9670;</div>
+        <p class="p-title">Financial Credibility</p>
+        <p class="p-value">AED 5,000,000</p>
+        <p class="p-body">Fully paid-up capital with a holding group structure ensures we can sustain large-volume purchase orders without cash-flow constraints affecting your supply chain.</p>
+      </div>
+      <div class="pillar">
+        <div class="p-mark">&#9670;</div>
+        <p class="p-title">Operational Precision</p>
+        <p class="p-value">48h → Same Day</p>
+        <p class="p-body">Tiered delivery commitments from routine 48-hour fulfillment to same-day emergency supply — with no premium surcharge on emergency orders, ever.</p>
+      </div>
+      <div class="pillar t-teal">
+        <div class="p-mark tm">&#9670;</div>
+        <p class="p-title">Measurable Savings</p>
+        <p class="p-value">Up to 12% Off</p>
+        <p class="p-body">Volume-tiered pricing, Net-60 payment terms, monthly consolidated invoicing, and a zero-risk 90-day cost-price trial — budgets improve from month one.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot">
+    <span class="foot-tag">Duchin General Trading L.L.C · Emirates Hospital Supply Partnership Proposal</span>
+    <span class="foot-tag">Confidential · July 2026</span>
+  </footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 03 · COMPANY PROFILE
+═══════════════════════════════════════════════════════════════════ -->
+<section class="slide" id="s3">
+  <header class="s-head">
+    <div class="brand"><div class="brand-gem"></div><span class="brand-name">Duchin General Trading L.L.C</span></div>
+    <span class="slide-num">03 / 10</span>
+  </header>
+  <div class="s-body">
+    <p class="eyebrow">Company Profile</p>
+    <h2 class="section-h">Duchin General Trading — Credentials at a Glance</h2>
+    <p class="body-copy" style="margin-top:8px;">A Dubai DED-licensed general trading entity with AED 5 million paid-up capital, registered with the Dubai Chamber of Commerce and Industry, and 100% owned by Duchin Holding LLC-FZ — a free zone holding company.</p>
+
+    <div class="lic-card">
+      <div class="lic-grid">
+        <div class="lf">
+          <span class="lf-l">Company Name</span>
+          <span class="lf-v">DUCHIN GENERAL TRADING L.L.C</span>
+        </div>
+        <div class="lf">
+          <span class="lf-l">License Number</span>
+          <span class="lf-v mono">1588874</span>
+        </div>
+        <div class="lf">
+          <span class="lf-l">License Category</span>
+          <span class="lf-v">Dep. of Economic Development, Dubai</span>
+        </div>
+        <div class="lf">
+          <span class="lf-l">Legal Form</span>
+          <span class="lf-v">LLC — Single Owner (LLC-SO)</span>
+        </div>
+        <div class="lf">
+          <span class="lf-l">Business Activity</span>
+          <span class="lf-v active-tag"><span class="active-dot"></span>General Trading · Active</span>
+        </div>
+        <div class="lf">
+          <span class="lf-l">Paid-Up Capital</span>
+          <span class="lf-v mono">AED 5,000,000</span>
+        </div>
+        <div class="lf">
+          <span class="lf-l">DCCI Membership</span>
+          <span class="lf-v mono">665694</span>
+        </div>
+        <div class="lf">
+          <span class="lf-l">Commercial Register</span>
+          <span class="lf-v mono">2784711</span>
+        </div>
+        <div class="lf">
+          <span class="lf-l">Number of Shares</span>
+          <span class="lf-v mono">5,000 Shares</span>
+        </div>
+        <div class="lf">
+          <span class="lf-l">License Issued</span>
+          <span class="lf-v">12 January 2026</span>
+        </div>
+        <div class="lf">
+          <span class="lf-l">License Valid Until</span>
+          <span class="lf-v">11 January 2027</span>
+        </div>
+        <div class="lf">
+          <span class="lf-l">Parent Entity (100% Owner)</span>
+          <span class="lf-v">Duchin Holding L.L.C-FZ</span>
+        </div>
+        <div class="lf" style="grid-column:1/-1;">
+          <span class="lf-l">Registered Address</span>
+          <span class="lf-v">Office No. 107-038, Al Habibia Fourth, Dubai, UAE</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chip-row">
+      <span class="chip">DED Dubai Licensed</span>
+      <span class="chip">DCCI Member #665694</span>
+      <span class="chip">AED 5M Paid-Up Capital</span>
+      <span class="chip">5% VAT Compliant</span>
+      <span class="chip">UAE Entity</span>
+      <span class="chip">Active Status</span>
+    </div>
+  </div>
+  <footer class="s-foot">
+    <span class="foot-tag">Duchin General Trading L.L.C · Emirates Hospital Supply Partnership Proposal</span>
+    <span class="foot-tag">Confidential · July 2026</span>
+  </footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 04 · GROUP STRUCTURE
+═══════════════════════════════════════════════════════════════════ -->
+<section class="slide" id="s4">
+  <header class="s-head">
+    <div class="brand"><div class="brand-gem"></div><span class="brand-name">Duchin General Trading L.L.C</span></div>
+    <span class="slide-num">04 / 10</span>
+  </header>
+  <div class="s-body">
+    <p class="eyebrow">Group Structure</p>
+    <h2 class="section-h">Backed by Duchin Holding — Group Strength Behind Every Order</h2>
+    <p class="body-copy" style="margin-top:8px;">Duchin General Trading is the Dubai DED operating arm of the Duchin Group, 100% owned by Duchin Holding LLC-FZ. The free zone holding structure gives the group international trade access, capital efficiency, and the institutional depth to support high-value healthcare procurement partnerships.</p>
+
+    <div class="group-wrap">
+      <div class="org">
+        <div class="org-box holding">
+          <div class="ob-type">Holding Entity · Free Zone</div>
+          <div class="ob-name">Duchin Holding L.L.C-FZ</div>
+        </div>
+        <div class="org-line"></div>
+        <div class="org-box">
+          <div class="ob-type">100% Subsidiary · Dubai DED</div>
+          <div class="ob-name">Duchin General Trading L.L.C</div>
+        </div>
+        <div class="org-line"></div>
+        <div class="org-leaf">
+          <div class="ol-type">Proposed Supply Partnership</div>
+          <div class="ol-name">Emirates Hospital Group</div>
+        </div>
+      </div>
+
+      <div class="group-facts">
+        <div class="gf">
+          <span class="gf-l">Group Architecture</span>
+          <span class="gf-v">Free Zone Holding → Dubai DED Operating Entity. A structure engineered for international sourcing and local UAE compliance.</span>
+        </div>
+        <div class="gf">
+          <span class="gf-l">Ownership Structure</span>
+          <span class="gf-v">100% of Duchin General Trading is held by Duchin Holding LLC-FZ — single-owner LLC ensuring unified decision-making and rapid response.</span>
+        </div>
+        <div class="gf">
+          <span class="gf-l">Management</span>
+          <span class="gf-v">Rana Farhan Ahmed Rana Zarar Ahmed (Manager) — direct accountability, no committee delays on procurement decisions.</span>
+        </div>
+        <div class="gf">
+          <span class="gf-l">Regulatory Standing</span>
+          <span class="gf-v">Fully compliant with Dubai DED, Dubai Chamber, and UAE Commercial Companies Law. All documentation current and verifiable.</span>
+        </div>
+        <div class="gf">
+          <span class="gf-l">Group Diversification</span>
+          <span class="gf-v">The Duchin Group operates across multiple sectors — including F&amp;B through its Heng Chen ME brand in Dubai — demonstrating proven operational management across industries.</span>
+        </div>
+        <div class="gf">
+          <span class="gf-l">Free Zone &amp; Capital Advantage</span>
+          <span class="gf-v">AED 5M paid-up at operating level. Free zone holding enables international sourcing, efficient capital deployment, and extended credit terms to strategic clients.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot">
+    <span class="foot-tag">Duchin General Trading L.L.C · Emirates Hospital Supply Partnership Proposal</span>
+    <span class="foot-tag">Confidential · July 2026</span>
+  </footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 05 · THE OPPORTUNITY
+═══════════════════════════════════════════════════════════════════ -->
+<section class="slide" id="s5">
+  <header class="s-head">
+    <div class="brand"><div class="brand-gem"></div><span class="brand-name">Duchin General Trading L.L.C</span></div>
+    <span class="slide-num">05 / 10</span>
+  </header>
+  <div class="s-body">
+    <p class="eyebrow">The Opportunity</p>
+    <h2 class="section-h">Understanding Emirates Hospital Group's Procurement Needs</h2>
+    <p class="body-copy" style="margin-top:8px;">World-class patient care demands a supply chain that never fails. Emirates Hospital Group's procurement function requires partners who understand that a delayed supply isn't just a logistics problem — it's a patient care risk.</p>
+
+    <div class="needs-wrap">
+      <div class="needs-list">
+        <div class="need">
+          <span class="need-mark">SC</span>
+          <div>
+            <p class="need-h">Uninterrupted Supply Continuity</p>
+            <p class="need-p">Medical operations require zero supply gaps. We maintain buffer inventory and a documented emergency protocol for critical items — activated within hours, not days.</p>
+          </div>
+        </div>
+        <div class="need">
+          <span class="need-mark">CO</span>
+          <div>
+            <p class="need-h">Cost Optimization Without Quality Compromise</p>
+            <p class="need-p">Rising procurement costs compress margins. Our competitive pricing model delivers 8–12% savings vs. market benchmark while maintaining product quality and origin documentation.</p>
+          </div>
+        </div>
+        <div class="need">
+          <span class="need-mark">RC</span>
+          <div>
+            <p class="need-h">Regulatory & Documentation Compliance</p>
+            <p class="need-p">Every supply comes with certificates of origin, quality declarations, and UAE-compliant VAT invoicing. Full traceability for DHA and JCIA audit readiness.</p>
+          </div>
+        </div>
+        <div class="need">
+          <span class="need-mark">VC</span>
+          <div>
+            <p class="need-h">Vendor Consolidation Across Categories</p>
+            <p class="need-p">Managing 30+ vendors for a hospital's diverse needs creates administrative burden. A single general trading partner across multiple categories reduces your procurement overhead by an estimated 40%.</p>
+          </div>
+        </div>
+        <div class="need">
+          <span class="need-mark">TR</span>
+          <div>
+            <p class="need-h">Transparent Spend Reporting</p>
+            <p class="need-p">Monthly spend analytics, quarterly business reviews, and real-time order tracking via a dedicated portal — full visibility for your finance and procurement teams.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hosp-panel">
+        <p class="hosp-panel-h">Emirates Hospital Group</p>
+        <div class="hosp-row"><span>Founded</span><span>1995</span></div>
+        <div class="hosp-row"><span>Presence</span><span>Multi-Facility UAE</span></div>
+        <div class="hosp-row"><span>Accreditation</span><span>JCI &amp; ISO</span></div>
+        <div class="hosp-row"><span>Licensing</span><span>Dubai Health Authority</span></div>
+        <div class="hosp-row"><span>Sector</span><span>Private Healthcare</span></div>
+        <div class="hosp-row"><span>Model</span><span>Multi-Category Procurement</span></div>
+        <div class="hosp-row"><span>Vendor Criteria</span><span>Registered &amp; Compliant</span></div>
+        <p class="hosp-note">Duchin General Trading meets and exceeds all vendor registration prerequisites for UAE private healthcare procurement. Full documentation submitted on request.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot">
+    <span class="foot-tag">Duchin General Trading L.L.C · Emirates Hospital Supply Partnership Proposal</span>
+    <span class="foot-tag">Confidential · July 2026</span>
+  </footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 06 · SUPPLY CATEGORIES
+═══════════════════════════════════════════════════════════════════ -->
+<section class="slide" id="s6">
+  <header class="s-head">
+    <div class="brand"><div class="brand-gem"></div><span class="brand-name">Duchin General Trading L.L.C</span></div>
+    <span class="slide-num">06 / 10</span>
+  </header>
+  <div class="s-body">
+    <p class="eyebrow">Supply Capabilities</p>
+    <h2 class="section-h">One Partner. Every Category Emirates Hospital Needs.</h2>
+    <p class="body-copy" style="margin-top:8px;">Our General Trading license covers the full spectrum of hospital procurement — from clinical consumables to facility operations — all under one framework agreement.</p>
+
+    <div class="cat-grid">
+      <div class="cat">
+        <span class="cat-code">MC</span>
+        <span class="cat-n">Medical Consumables</span>
+        <span class="cat-d">Gloves, syringes, bandages, wound care, drapes, gowns, masks, IV supplies, catheters</span>
+      </div>
+      <div class="cat">
+        <span class="cat-code">DS</span>
+        <span class="cat-n">Diagnostic Supplies</span>
+        <span class="cat-d">Lab reagents, test kits, specimen containers, collection tubes, diagnostic accessories</span>
+      </div>
+      <div class="cat">
+        <span class="cat-code">PP</span>
+        <span class="cat-n">PPE &amp; Infection Control</span>
+        <span class="cat-d">Personal protective equipment, disinfectants, sanitizers, sterilization pouches, wipes</span>
+      </div>
+      <div class="cat">
+        <span class="cat-code">ME</span>
+        <span class="cat-n">Medical Equipment</span>
+        <span class="cat-d">Patient monitoring accessories, small devices, mobility aids, examination equipment</span>
+      </div>
+      <div class="cat">
+        <span class="cat-code">IT</span>
+        <span class="cat-n">IT &amp; Technology</span>
+        <span class="cat-d">Computers, tablets, printers, networking gear, medical display hardware, UPS systems</span>
+      </div>
+      <div class="cat">
+        <span class="cat-code">FM</span>
+        <span class="cat-n">Facility &amp; Maintenance</span>
+        <span class="cat-d">Cleaning products, janitorial supplies, waste disposal, housekeeping materials</span>
+      </div>
+      <div class="cat">
+        <span class="cat-code">PA</span>
+        <span class="cat-n">Patient Amenities</span>
+        <span class="cat-d">Bedding, patient gowns, hygiene kits, comfort items, toiletries, slippers</span>
+      </div>
+      <div class="cat">
+        <span class="cat-code">OA</span>
+        <span class="cat-n">Office &amp; Administrative</span>
+        <span class="cat-d">Stationery, furniture, signage, staff uniforms, printing consumables, storage</span>
+      </div>
+    </div>
+
+    <p style="margin-top:14px;font-size:.75rem;color:var(--lo);">All categories sourced from verified, UAE-compliant suppliers. Certificates of origin, quality declarations, and full product traceability provided on every order.</p>
+  </div>
+  <footer class="s-foot">
+    <span class="foot-tag">Duchin General Trading L.L.C · Emirates Hospital Supply Partnership Proposal</span>
+    <span class="foot-tag">Confidential · July 2026</span>
+  </footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 07 · COMPETITIVE ADVANTAGE
+═══════════════════════════════════════════════════════════════════ -->
+<section class="slide" id="s7">
+  <header class="s-head">
+    <div class="brand"><div class="brand-gem"></div><span class="brand-name">Duchin General Trading L.L.C</span></div>
+    <span class="slide-num">07 / 10</span>
+  </header>
+  <div class="s-body">
+    <p class="eyebrow">Why Choose Us</p>
+    <h2 class="section-h">What Sets Duchin Apart From Any Other Trading Vendor</h2>
+    <p class="body-copy" style="margin-top:8px;">We are not just another registered trading company. Duchin General Trading is a structured, well-capitalized, group-backed entity with the commercial design to match the procurement demands of a premium healthcare organization.</p>
+
+    <div class="adv-grid">
+      <div class="adv">
+        <div class="adv-mark">&#10003;</div>
+        <div>
+          <p class="adv-h">DED Dubai Licensed &amp; Active</p>
+          <p class="adv-p">License No. 1588874 — actively maintained with the Dubai Department of Economic Development. Verifiable in real-time via Dubai DET portal.</p>
+        </div>
+      </div>
+      <div class="adv">
+        <div class="adv-mark">&#10003;</div>
+        <div>
+          <p class="adv-h">AED 5 Million Paid-Up Capital</p>
+          <p class="adv-p">Substantial financial backing enables large forward purchase orders, vendor prepayments, and credit extension to clients — your supply never waits on our cash flow.</p>
+        </div>
+      </div>
+      <div class="adv">
+        <div class="adv-mark">&#10003;</div>
+        <div>
+          <p class="adv-h">Dubai Chamber of Commerce Member</p>
+          <p class="adv-p">DCCI Membership No. 665694. Registered and verified. An additional layer of institutional credibility beyond the trade license alone.</p>
+        </div>
+      </div>
+      <div class="adv">
+        <div class="adv-mark">&#10003;</div>
+        <div>
+          <p class="adv-h">Holding Group Structural Backing</p>
+          <p class="adv-p">100% owned by Duchin Holding LLC-FZ — a free zone holding entity. Group structure provides international sourcing reach and financial depth behind every commitment.</p>
+        </div>
+      </div>
+      <div class="adv">
+        <div class="adv-mark">&#10003;</div>
+        <div>
+          <p class="adv-h">No Emergency Delivery Surcharge</p>
+          <p class="adv-p">Competitors typically charge 20–50% premium for same-day delivery. Our SLAs carry zero emergency surcharge — cost certainty regardless of urgency level.</p>
+        </div>
+      </div>
+      <div class="adv">
+        <div class="adv-mark">&#10003;</div>
+        <div>
+          <p class="adv-h">Multi-Category Single Partnership</p>
+          <p class="adv-p">Consolidate procurement across 8+ categories under one agreement. One account manager, one monthly invoice, one quarterly business review — not 30 separate vendor relationships.</p>
+        </div>
+      </div>
+      <div class="adv">
+        <div class="adv-mark">&#10003;</div>
+        <div>
+          <p class="adv-h">Year 1 Price Lock Guarantee</p>
+          <p class="adv-p">All agreed pricing is fixed for the full first year — no inflation adjustments, no mid-year surprises. Your procurement budget is protected from volatility.</p>
+        </div>
+      </div>
+      <div class="adv">
+        <div class="adv-mark">&#10003;</div>
+        <div>
+          <p class="adv-h">Full Compliance Documentation</p>
+          <p class="adv-p">Every supply order includes certificates of origin, quality declarations, and VAT-inclusive invoicing per UAE law — DHA and JCIA audit-ready as standard.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot">
+    <span class="foot-tag">Duchin General Trading L.L.C · Emirates Hospital Supply Partnership Proposal</span>
+    <span class="foot-tag">Confidential · July 2026</span>
+  </footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 08 · COMMERCIAL PROPOSAL
+═══════════════════════════════════════════════════════════════════ -->
+<section class="slide" id="s8">
+  <header class="s-head">
+    <div class="brand"><div class="brand-gem"></div><span class="brand-name">Duchin General Trading L.L.C</span></div>
+    <span class="slide-num">08 / 10</span>
+  </header>
+  <div class="s-body">
+    <p class="eyebrow">Commercial Proposal</p>
+    <h2 class="section-h">Terms Designed to Deliver Measurable Value from Day One</h2>
+    <p class="body-copy" style="margin-top:6px;">A commercial framework engineered around Emirates Hospital's operational reality: strong payment cycles, need for price certainty, and zero tolerance for supply disruption.</p>
+
+    <div class="comm-grid">
+      <div class="comm-card">
+        <p class="cc-head">Volume Pricing Tiers</p>
+        <div style="overflow-x:auto;">
+          <table class="tier-tbl">
+            <thead>
+              <tr>
+                <th>Annual Volume</th>
+                <th>Discount</th>
+                <th>Included</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Up to AED 500K</td>
+                <td class="hl">Market Rate</td>
+                <td>Portal + Priority SLA</td>
+              </tr>
+              <tr>
+                <td>AED 500K – 2M</td>
+                <td class="hl">5% Off</td>
+                <td>Named Manager + QBRs</td>
+              </tr>
+              <tr>
+                <td>AED 2M – 5M</td>
+                <td class="hl">8% Off</td>
+                <td>Dedicated Team + Analytics</td>
+              </tr>
+              <tr>
+                <td>Above AED 5M</td>
+                <td class="hl">12% Off</td>
+                <td>Full Partner Programme</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout-gold">Early payment incentive: additional 2% discount for settlement within 30 days of invoice date.</div>
+      </div>
+
+      <div class="comm-card">
+        <p class="cc-head">Payment &amp; Delivery Terms</p>
+        <div class="sla-row"><span class="sla-lbl">Standard Payment Terms</span><span class="sla-val">Net 60 Days</span></div>
+        <div class="sla-row"><span class="sla-lbl">Early Payment Discount</span><span class="sla-val">+2% for Net 30</span></div>
+        <div class="sla-row"><span class="sla-lbl">Minimum Order Value</span><span class="sla-badge">No Minimum</span></div>
+        <div class="sla-row"><span class="sla-lbl">Free Delivery Threshold</span><span class="sla-val">AED 5,000+</span></div>
+        <div class="sla-row"><span class="sla-lbl">Emergency Surcharge</span><span class="sla-badge">None — Included</span></div>
+        <div class="sla-row"><span class="sla-lbl">Invoicing Method</span><span class="sla-val">Monthly Consolidated</span></div>
+        <div class="sla-row"><span class="sla-lbl">Contract Duration</span><span class="sla-val">1 Year + Auto-Renewal</span></div>
+        <div class="sla-row"><span class="sla-lbl">Year 1 Pricing</span><span class="sla-badge">Fixed — No Escalation</span></div>
+      </div>
+
+      <div class="comm-card">
+        <p class="cc-head">Service Level Agreements</p>
+        <div class="sla-row"><span class="sla-lbl">Routine Orders</span><span class="sla-val">48 Hours</span></div>
+        <div class="sla-row"><span class="sla-lbl">Priority Orders</span><span class="sla-val">24 Hours</span></div>
+        <div class="sla-row"><span class="sla-lbl">Emergency Orders</span><span class="sla-val">Same Day</span></div>
+        <div class="sla-row"><span class="sla-lbl">Order Confirmation</span><span class="sla-val">Within 2 Hours</span></div>
+        <div class="sla-row"><span class="sla-lbl">Out-of-Stock Replenishment</span><span class="sla-val">3–5 Business Days</span></div>
+        <div class="sla-row"><span class="sla-lbl">Invoice Dispute Resolution</span><span class="sla-val">5 Business Days</span></div>
+        <div class="sla-row"><span class="sla-lbl">SLA Breach Credit</span><span class="sla-val">5% Monthly Invoice</span></div>
+      </div>
+
+      <div class="comm-card">
+        <p class="cc-head">Introductory Offer — First 90 Days</p>
+        <div class="sla-row"><span class="sla-lbl">Pricing Model</span><span class="sla-badge">Cost Price — Zero Margin</span></div>
+        <div class="sla-row"><span class="sla-lbl">Onboarding Fee</span><span class="sla-badge">Waived</span></div>
+        <div class="sla-row"><span class="sla-lbl">Portal Setup</span><span class="sla-badge">Complimentary</span></div>
+        <div class="sla-row"><span class="sla-lbl">WhatsApp Business Line</span><span class="sla-badge">24/7 Direct Access</span></div>
+        <div class="sla-row"><span class="sla-lbl">Performance Review</span><span class="sla-val">Month 1 &amp; Month 3</span></div>
+        <div class="sla-row"><span class="sla-lbl">CSR Commitment</span><span class="sla-val">1% of Contract Value</span></div>
+        <div class="callout-teal">90 days at cost price — test our delivery quality with zero financial risk before full commercial terms apply.</div>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot">
+    <span class="foot-tag">Duchin General Trading L.L.C · Emirates Hospital Supply Partnership Proposal</span>
+    <span class="foot-tag">Confidential · July 2026</span>
+  </footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 09 · PARTNERSHIP FRAMEWORK
+═══════════════════════════════════════════════════════════════════ -->
+<section class="slide" id="s9">
+  <header class="s-head">
+    <div class="brand"><div class="brand-gem"></div><span class="brand-name">Duchin General Trading L.L.C</span></div>
+    <span class="slide-num">09 / 10</span>
+  </header>
+  <div class="s-body">
+    <p class="eyebrow">Implementation</p>
+    <h2 class="section-h">Partnership Framework &amp; Onboarding Plan</h2>
+    <p class="body-copy" style="margin-top:8px;">A structured 60-day onboarding designed to minimize disruption to your existing procurement operations while activating value from the first order.</p>
+
+    <div class="tl-wrap">
+      <div class="tl-step">
+        <div class="tl-dot g">01</div>
+        <p class="tl-phase">Weeks 1–2</p>
+        <p class="tl-title">Vendor Registration</p>
+        <p class="tl-desc">Complete Emirates Hospital vendor registration. Submit full compliance pack: trade license, DCCI certificate, commercial register, MOA, financial statements.</p>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot g">02</div>
+        <p class="tl-phase">Weeks 3–4</p>
+        <p class="tl-title">Category Mapping</p>
+        <p class="tl-desc">Joint session with your procurement team. Map product categories, validate pricing against current benchmark, build approved product list and delivery schedule.</p>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot t">03</div>
+        <p class="tl-phase">Month 2 Onward</p>
+        <p class="tl-title">Live Operations + Review</p>
+        <p class="tl-desc">First purchase orders at cost-price. Portal activated. KPI dashboard live. 30-day performance review with procurement team. Full commercial terms from month 4.</p>
+      </div>
+    </div>
+
+    <div style="height:1px;background:var(--border);margin:20px 0;"></div>
+
+    <div class="ops-grid">
+      <div class="op">
+        <p class="op-h">Monthly Consolidated Invoice</p>
+        <p class="op-p">One invoice per month across all categories — reducing your accounts payable processing overhead significantly.</p>
+      </div>
+      <div class="op">
+        <p class="op-h">Quarterly Business Reviews</p>
+        <p class="op-p">Structured QBRs with spend analytics, savings dashboard, and planning for the following quarter's supply requirements.</p>
+      </div>
+      <div class="op">
+        <p class="op-h">Online Ordering Portal</p>
+        <p class="op-p">Dedicated portal with order history, live delivery tracking, compliance document repository, and category spend analytics.</p>
+      </div>
+      <div class="op">
+        <p class="op-h">Named Account Manager</p>
+        <p class="op-p">A single point of contact available via phone, email, and WhatsApp — accountable for every order, every delivery, every issue.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot">
+    <span class="foot-tag">Duchin General Trading L.L.C · Emirates Hospital Supply Partnership Proposal</span>
+    <span class="foot-tag">Confidential · July 2026</span>
+  </footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 10 · NEXT STEPS
+═══════════════════════════════════════════════════════════════════ -->
+<section class="slide" id="s10">
+  <header class="s-head">
+    <div class="brand"><div class="brand-gem"></div><span class="brand-name">Duchin General Trading L.L.C</span></div>
+    <span class="slide-num">10 / 10</span>
+  </header>
+  <div class="s-body">
+    <p class="eyebrow">Call to Action</p>
+    <h2 class="section-h">Three Steps to Begin This Partnership</h2>
+    <p class="body-copy" style="margin-top:8px;">Emirates Hospital Group's supply chain deserves a partner that matches its standard of excellence. We are ready to begin immediately. The next step is yours.</p>
+
+    <div class="cta-grid">
+      <div class="cta-card">
+        <div class="cta-step">1</div>
+        <p class="cta-h">Schedule a Meeting</p>
+        <p class="cta-p">Arrange a presentation with your procurement and supply chain leadership team. We will bring samples, documentation, and category pricing for your review.</p>
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:4px;">
+          <p style="font-size:.82rem;font-weight:700;color:var(--hi);">Rana Farhan Ahmed</p>
+          <a href="tel:+971504975365" class="cta-a">+971 50 497 5365</a>
+          <a href="mailto:Farhan@hengchenme.com" class="cta-a">Farhan@hengchenme.com</a>
+        </div>
+      </div>
+
+      <div class="cta-card">
+        <div class="cta-step">2</div>
+        <p class="cta-h">Vendor Registration</p>
+        <p class="cta-p">We will complete all Emirates Hospital vendor registration documentation and submit the full compliance pack within 48 hours of your confirmation.</p>
+        <div class="callout-gold" style="margin-top:12px;">Ready for submission: Trade License · DCCI Certificate · Commercial Register · MOA · Financial Statements</div>
+      </div>
+
+      <div class="cta-card">
+        <div class="cta-step">3</div>
+        <p class="cta-h">Sign the Framework Agreement</p>
+        <p class="cta-p">Execute a 1-year framework supply agreement incorporating the commercial terms outlined in this proposal. First 90 days at cost price.</p>
+        <p style="margin-top:10px;font-size:.78rem;color:var(--lo);">Proposed commencement: August 2026</p>
+        <div class="callout-teal" style="margin-top:10px;">Zero financial risk for the first 90 days. We prove our value before you commit to the full commercial terms.</div>
+      </div>
+    </div>
+
+    <div class="sig-bar">
+      <div class="sig-col">
+        <span class="sig-lbl">Submitted by</span>
+        <span class="sig-val">DUCHIN GENERAL TRADING L.L.C</span>
+        <span class="sig-sub">Office 107-038, Al Habibia Fourth, Dubai, UAE</span>
+        <span class="sig-sub">License 1588874 · DCCI 665694</span>
+      </div>
+      <div class="sig-col" style="text-align:center;">
+        <span class="sig-lbl">Submitted to</span>
+        <span class="sig-val">EMIRATES HOSPITAL GROUP</span>
+        <span class="sig-sub">Procurement &amp; Supply Chain Division</span>
+      </div>
+      <div class="sig-col" style="text-align:right;">
+        <span class="sig-lbl">Date &amp; Validity</span>
+        <span class="sig-date">July 2026</span>
+        <span class="sig-sub">Valid for 30 days from date of issue</span>
+      </div>
+    </div>
+  </div>
+  <footer class="s-foot">
+    <span class="foot-tag">Duchin General Trading L.L.C · License 1588874 · DCCI 665694 · Dubai, UAE</span>
+    <span class="foot-tag">Confidential · July 2026</span>
+  </footer>
+</section>
+
+<script>
+(function () {
+  var slides = document.querySelectorAll('.slide');
+  var dots   = document.querySelectorAll('.dot');
+
+  function goTo(i) {
+    slides[i] && slides[i].scrollIntoView({ behavior: 'smooth' });
+  }
+  window.goTo = goTo;
+
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        var i = Array.prototype.indexOf.call(slides, e.target);
+        dots.forEach(function (d, j) { d.classList.toggle('active', j === i); });
+      }
+    });
+  }, { threshold: 0.5 });
+
+  slides.forEach(function (s) { obs.observe(s); });
+
+  document.addEventListener('keydown', function (e) {
+    var current = 0;
+    dots.forEach(function (d, i) { if (d.classList.contains('active')) current = i; });
+    if ((e.key === 'ArrowDown' || e.key === 'ArrowRight') && current < slides.length - 1) goTo(current + 1);
+    if ((e.key === 'ArrowUp'   || e.key === 'ArrowLeft')  && current > 0)                  goTo(current - 1);
+  });
+}());
+</script>
+</body>
+</html>
